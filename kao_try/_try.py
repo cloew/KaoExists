@@ -10,7 +10,8 @@ class Try(object):
         
     def __getattr__(self, name):
         """ Get the attr """
-        if name in self.tryVars:
-            return object.__getattribute__(self, name)
-        else:
-            return Try(getattr(self._toWrap, name)) if hasattr(self._toWrap, name) else Try(None)
+        return Try(getattr(self._toWrap, name)) if hasattr(self._toWrap, name) else Try(None)
+            
+    def done(self):
+        """ Terminate the Try object and return the actual value """
+        return self._toWrap
